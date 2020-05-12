@@ -1,7 +1,7 @@
 # Личный проект «Readme»
 
 * Студент: [Денис Туманенков](https://up.htmlacademy.ru/php/12/user/29559).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Шершнев](https://htmlacademy.ru/profile/shv_sergey).
 
 ---
 
