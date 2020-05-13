@@ -41,7 +41,8 @@ $user_name = 'Denis'; // укажите здесь ваше имя
         </form>
         <div class="header__nav-wrapper">
             <!-- здесь должен быть PHP код, который показывает следующий тег по условию -->
-            <nav class="header__nav <?php if ($is_auth != 1): ?>visually-hidden <? endif ?>">
+            <?php if ($is_auth !== 1): ?>
+            <nav class="header__nav">
                 <ul class="header__my-nav">
                     <li class="header__my-page header__my-page--popular">
                         <a class="header__page-link header__page-link--active" title="Популярный контент">
@@ -111,6 +112,7 @@ $user_name = 'Denis'; // укажите здесь ваше имя
                     </li>
                 </ul>
             </nav>
+            <?php endif ?>
         </div>
     </div>
 </header>
