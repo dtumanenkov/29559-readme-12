@@ -288,16 +288,16 @@ $posts=[
                 <!--содержимое для поста-текста-->
                 <p><!--здесь текст--></p>
             </div>
-
+            <?php print_r($posts)?>
             <?php foreach ($posts as $key => $val): ?>
-            <article class="popular__post post">
+            <article class="popular__post post <?=$val['type']?>">
                 <header class="post__header">
                     <h2><?=$val['header']?></h2>
                 </header>
                 <div class="post__main">
                     <!--здесь содержимое карточки-->
-                    <?php switch ($val['type']): ?>
-                    <?php case 'post-quote': ?>
+                    <?php switch ($val['type']):
+                    case 'post-quote': ?>
                     <!--содержимое для поста-цитаты-->
                     <blockquote>
                         <p>
@@ -306,14 +306,17 @@ $posts=[
                         </p>
                         <cite>Неизвестный</cite>
                     </blockquote>
+                    <?php break;?>
                     <?php case 'post-text': ?>
                     <!--содержимое для поста-текста-->
                     <p><?=$val['content']?></p>
+                    <?php break;?>
                     <?php case 'post-photo': ?>
                     <!--содержимое для поста-фото-->
                     <div class="post-photo__image-wrapper">
                         <img src="img/<?=$val['content']?>" alt="Фото от пользователя" width="360" height="240">
                     </div>
+                    <?php break;?>
                     <?php case 'post-link': ?>
                     <!--содержимое для поста-ссылки-->
                     <div class="post-link__wrapper">
@@ -329,6 +332,7 @@ $posts=[
                             <span><?=$val['content']?></span>
                         </a>
                     </div>
+                    <?php break;?>
                     <?php endswitch; ?>
                 </div>
                 <footer class="post__footer">
