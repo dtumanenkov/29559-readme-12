@@ -4,35 +4,35 @@ $is_auth = rand(0, 1);
 $user_name = 'Denis'; // укажите здесь ваше имя
 $posts=[
     [
-        'header'=>'Цитата',
+        'post_header'=>'Цитата',
         'type'=>'post-quote',
         'content'=>'Мы в жизни любим только раз, а после ищем лишь похожих',
         'user_name'=>'Лариса',
         'avatar'=>'userpic-larisa-small.jpg'
     ],
     [
-        'header'=>'Игра престолов',
+        'post_header'=>'Игра престолов',
         'type'=>'post-text',
         'content'=>'Не могу дождаться начала финального сезона своего любимого сериала!',
         'user_name'=>'Владик',
         'avatar'=>'userpic.jpg'
     ],
     [
-        'header'=>'Наконец, обработал фотки!',
+        'post_header'=>'Наконец, обработал фотки!',
         'type'=>'post-photo',
         'content'=>'rock-medium.jpg',
         'user_name'=>'Виктор',
         'avatar'=>'	userpic-mark.jpg'
     ],
     [
-        'header'=>'Моя мечта',
+        'post_header'=>'Моя мечта',
         'type'=>'post-photo',
         'content'=>'coast-medium.jpg',
         'user_name'=>'Лариса',
         'avatar'=>'userpic-larisa-small.jpg'
     ],
     [
-        'header'=>'Лучшие курсы',
+        'post_header'=>'Лучшие курсы',
         'type'=>'post-link',
         'content'=>'www.htmlacademy.ru',
         'user_name'=>'Владик',
@@ -108,7 +108,7 @@ $posts=[
                             <div class="header__profile-name">
                                 <span>
                                     <!--здесь должно быть имя пользователя-->
-                                    <?php echo($user_name) ?>
+                                    <?= $user_name; ?>
                                 </span>
                                 <svg class="header__link-arrow" width="10" height="6">
                                     <use xlink:href="#icon-arrow-right-ad"></use>
@@ -241,80 +241,34 @@ $posts=[
                 </ul>
             </div>
         </div>
+
         <div class="popular__posts">
-            <div class="visually-hidden" id="donor">
-                <!--содержимое для поста-цитаты-->
-                <blockquote>
-                    <p>
-                        <!--здесь текст-->
-                    </p>
-                    <cite>Неизвестный Автор</cite>
-                </blockquote>
-
-                <!--содержимое для поста-ссылки-->
-                <div class="post-link__wrapper">
-                    <a class="post-link__external" href="http://" title="Перейти по ссылке">
-                        <div class="post-link__info-wrapper">
-                            <div class="post-link__icon-wrapper">
-                                <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
-                            </div>
-                            <div class="post-link__info">
-                                <h3><!--здесь заголовок--></h3>
-                            </div>
-                        </div>
-                        <span><!--здесь ссылка--></span>
-                    </a>
-                </div>
-
-                <!--содержимое для поста-фото-->
-                <div class="post-photo__image-wrapper">
-                    <img src="img/" alt="Фото от пользователя" width="360" height="240">
-                </div>
-
-                <!--содержимое для поста-видео-->
-                <div class="post-video__block">
-                    <div class="post-video__preview">
-                        <?=embed_youtube_cover(/* вставьте ссылку на видео */); ?>
-                        <img src="img/coast-medium.jpg" alt="Превью к видео" width="360" height="188">
-                    </div>
-                    <a href="post-details.html" class="post-video__play-big button">
-                        <svg class="post-video__play-big-icon" width="14" height="14">
-                            <use xlink:href="#icon-video-play-big"></use>
-                        </svg>
-                        <span class="visually-hidden">Запустить проигрыватель</span>
-                    </a>
-                </div>
-
-                <!--содержимое для поста-текста-->
-                <p><!--здесь текст--></p>
-            </div>
-            <?php print_r($posts)?>
-            <?php foreach ($posts as $key => $val): ?>
-            <article class="popular__post post <?=$val['type']?>">
+            <?php foreach ($posts as $key => $items): ?>
+            <article class="popular__post post <?=$items["type"]?>">
                 <header class="post__header">
-                    <h2><?=$val['header']?></h2>
+                    <h2><?=$items["post_header"]?></h2>
                 </header>
                 <div class="post__main">
                     <!--здесь содержимое карточки-->
-                    <?php switch ($val['type']):
+                    <?php switch ($items["type"]):
                     case 'post-quote': ?>
                     <!--содержимое для поста-цитаты-->
                     <blockquote>
                         <p>
                             <!--здесь текст-->
-                            <?=$val['content']?>
+                            <?=$items["content"]?>
                         </p>
                         <cite>Неизвестный</cite>
                     </blockquote>
                     <?php break;?>
                     <?php case 'post-text': ?>
                     <!--содержимое для поста-текста-->
-                    <p><?=$val['content']?></p>
+                    <p><?=$items["content"]?></p>
                     <?php break;?>
                     <?php case 'post-photo': ?>
                     <!--содержимое для поста-фото-->
                     <div class="post-photo__image-wrapper">
-                        <img src="img/<?=$val['content']?>" alt="Фото от пользователя" width="360" height="240">
+                        <img src="img/<?=$items["content"]?>" alt="Фото от пользователя" width="360" height="240">
                     </div>
                     <?php break;?>
                     <?php case 'post-link': ?>
@@ -326,10 +280,10 @@ $posts=[
                                     <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
                                 </div>
                                 <div class="post-link__info">
-                                    <h3><?=$val['header']?></h3>
+                                    <h3><?=$items["post_header"]?></h3>
                                 </div>
                             </div>
-                            <span><?=$val['content']?></span>
+                            <span><?=$items["content"]?></span>
                         </a>
                     </div>
                     <?php break;?>
@@ -340,10 +294,10 @@ $posts=[
                         <a class="post__author-link" href="#" title="Автор">
                             <div class="post__avatar-wrapper">
                                 <!--укажите путь к файлу аватара-->
-                                <img class="post__author-avatar" src="img/<?=$val['avatar']?>" alt="Аватар пользователя">
+                                <img class="post__author-avatar" src="img/<?=$items["avatar"]?>" alt="Аватар пользователя">
                             </div>
                             <div class="post__info">
-                                <b class="post__author-name"><?=$val['user_name']?></b>
+                                <b class="post__author-name"><?=$items["user_name"]?></b>
                                 <time class="post__time" datetime="">дата</time>
                             </div>
                         </a>
