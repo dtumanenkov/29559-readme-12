@@ -1,6 +1,6 @@
 <?php
 $is_auth = rand(0, 1);
-
+$text_max_symbols_number=300;//максимальная длина текстового содержимого карточки поста
 $user_name = 'Denis'; // укажите здесь ваше имя
 $posts=[
     [
@@ -13,7 +13,9 @@ $posts=[
     [
         'post_header'=>'Игра престолов',
         'type'=>'post-text',
-        'content'=>'Не могу дождаться начала финального сезона своего любимого сериала!',
+        'content'=>'Главная задача этой функции урезать текст по отдельным словам. Это значит, что строка с обрезанным текстом не должна заканчиваться частью слова. Чтобы соблюсти это требование вам вначале потребуется разбить весь текст на отдельные слова (по пробелам).
+                    Затем в цикле вы последовательно считаете длину каждого слова и останавливаете цикл, когда суммарная длина символов в посчитанных словах начинает превышать ограничение.
+                    Теперь нужно сложить отдельные слова обратно в строку и добавить в конец этой строки знак многоточия.',
         'user_name'=>'Владик',
         'avatar'=>'userpic.jpg'
     ],
@@ -39,7 +41,25 @@ $posts=[
         'avatar'=>'userpic.jpg'
     ],
 ];
-
+function trim_text($str,$symbols_number=300){ //функция для обрезки длинного текста
+    $trim_str="";//переменная для работы со строкой
+    if(strlen($str)<$symbols_number){   //если длина меньше 300 -  просто возвращаем строку
+        $trim_str=$str;
+    }
+    else{
+        $str_array=explode(" ",$str); // разбиваем исходную строку на массив с разделителем пробелом
+        $total_length=0;// счетчик длины строки
+        for ($i=0;$i<count($str_array);$i++){ //пройдем по массиву подсчитывая длину каждого элемента
+            $total_length=$total_length+strlen($str_array[$i])+1;//общая длина слов массива + 1 символ пробела в конце каждого слова
+            if($total_length>$symbols_number){//если выбиваемся за предел количества символов - значит текущее слово уже не влезет
+                $trim_str=array_slice($str_array,0,$i); //обрезаем массив по i-тому элементу(не i-1 - т.к отсчет массива начинается с 0!)
+                break; // прерываем цикл for
+            }
+        }
+        $trim_str=implode(" ",$trim_str).'...'; //собираем обрезанный массив обратно в строку
+    }
+    return $trim_str;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -243,32 +263,37 @@ $posts=[
         </div>
 
         <div class="popular__posts">
-            <?php foreach ($posts as $key => $items): ?>
-            <article class="popular__post post <?=$items["type"]?>">
+            <?php foreach ($posts as $post): ?>
+            <article class="popular__post post <?=$post["type"]?>">
                 <header class="post__header">
-                    <h2><?=$items["post_header"]?></h2>
+                    <h2><?=$post["post_header"]?></h2>
                 </header>
                 <div class="post__main">
                     <!--здесь содержимое карточки-->
-                    <?php switch ($items["type"]):
+                    <?php switch ($post["type"]):
                     case 'post-quote': ?>
                     <!--содержимое для поста-цитаты-->
                     <blockquote>
                         <p>
                             <!--здесь текст-->
-                            <?=$items["content"]?>
+                            <?=$post["content"]?>
                         </p>
                         <cite>Неизвестный</cite>
                     </blockquote>
                     <?php break;?>
                     <?php case 'post-text': ?>
                     <!--содержимое для поста-текста-->
-                    <p><?=$items["content"]?></p>
+                    <?php if(strlen($post["content"])<$text_max_symbols_number): ?>
+                    <p><?=$post["content"]?></p>
+                    <?php else: ?>
+                    <p><?php echo(trim_text($post["content"],$text_max_symbols_number))?></p>
+                    <a class="post-text__more-link" href="#">Читать далее</a>
+                    <?php endif; ?>
                     <?php break;?>
                     <?php case 'post-photo': ?>
                     <!--содержимое для поста-фото-->
                     <div class="post-photo__image-wrapper">
-                        <img src="img/<?=$items["content"]?>" alt="Фото от пользователя" width="360" height="240">
+                        <img src="img/<?=$post["content"]?>" alt="Фото от пользователя" width="360" height="240">
                     </div>
                     <?php break;?>
                     <?php case 'post-link': ?>
@@ -280,10 +305,10 @@ $posts=[
                                     <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
                                 </div>
                                 <div class="post-link__info">
-                                    <h3><?=$items["post_header"]?></h3>
+                                    <h3><?=$post["post_header"]?></h3>
                                 </div>
                             </div>
-                            <span><?=$items["content"]?></span>
+                            <span><?=$post["content"]?></span>
                         </a>
                     </div>
                     <?php break;?>
@@ -294,10 +319,10 @@ $posts=[
                         <a class="post__author-link" href="#" title="Автор">
                             <div class="post__avatar-wrapper">
                                 <!--укажите путь к файлу аватара-->
-                                <img class="post__author-avatar" src="img/<?=$items["avatar"]?>" alt="Аватар пользователя">
+                                <img class="post__author-avatar" src="img/<?=$post["avatar"]?>" alt="Аватар пользователя">
                             </div>
                             <div class="post__info">
-                                <b class="post__author-name"><?=$items["user_name"]?></b>
+                                <b class="post__author-name"><?=$post["user_name"]?></b>
                                 <time class="post__time" datetime="">дата</time>
                             </div>
                         </a>
