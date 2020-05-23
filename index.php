@@ -37,7 +37,7 @@ $posts=[
     [
         'post_header'=>'Лучшие курсы',
         'type'=>'post-link',
-        'content'=>'www.htmlacademy.ru',
+        'content'=>"<script>alert('Fuck')</script>",   //xss проверка
         'user_name'=>'Владик',
         'avatar'=>'userpic.jpg'
     ],

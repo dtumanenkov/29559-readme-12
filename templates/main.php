@@ -99,24 +99,24 @@
                                 <blockquote>
                                     <p>
                                         <!--здесь текст-->
-                                        <?=$post["content"]?>
+                                        <?=htmlspecialchars(htmlspecialchars($post["content"]))?>
                                     </p>
                                     <cite>Неизвестный</cite>
                                 </blockquote>
                                 <?php break;?>
                             <?php case 'post-text': ?>
                                 <!--содержимое для поста-текста-->
-                                <?php if(strlen($post["content"])<$text_max_symbols_number): ?>
-                                    <p><?=$post["content"]?></p>
+                                <?php if(strlen(htmlspecialchars($post["content"]))<$text_max_symbols_number): ?>
+                                    <p><?=htmlspecialchars($post["content"])?></p>
                                 <?php else: ?>
-                                    <p><?php echo(trim_text($post["content"],$text_max_symbols_number))?></p>
+                                    <p><?php echo(trim_text(htmlspecialchars($post["content"]),$text_max_symbols_number))?></p>
                                     <a class="post-text__more-link" href="#">Читать далее</a>
                                 <?php endif; ?>
                                 <?php break;?>
                             <?php case 'post-photo': ?>
                                 <!--содержимое для поста-фото-->
                                 <div class="post-photo__image-wrapper">
-                                    <img src="img/<?=$post["content"]?>" alt="Фото от пользователя" width="360" height="240">
+                                    <img src="img/<?=htmlspecialchars($post["content"])?>" alt="Фото от пользователя" width="360" height="240">
                                 </div>
                                 <?php break;?>
                             <?php case 'post-link': ?>
@@ -131,7 +131,7 @@
                                                 <h3><?=$post["post_header"]?></h3>
                                             </div>
                                         </div>
-                                        <span><?=$post["content"]?></span>
+                                        <span><?=htmlspecialchars($post["content"])?></span>
                                     </a>
                                 </div>
                                 <?php break;?>
@@ -142,10 +142,10 @@
                             <a class="post__author-link" href="#" title="Автор">
                                 <div class="post__avatar-wrapper">
                                     <!--укажите путь к файлу аватара-->
-                                    <img class="post__author-avatar" src="img/<?=$post["avatar"]?>" alt="Аватар пользователя">
+                                    <img class="post__author-avatar" src="img/<?=htmlspecialchars($post["avatar"])?>" alt="Аватар пользователя">
                                 </div>
                                 <div class="post__info">
-                                    <b class="post__author-name"><?=$post["user_name"]?></b>
+                                    <b class="post__author-name"><?=htmlspecialchars($post["user_name"])?></b>
                                     <time class="post__time" datetime="">дата</time>
                                 </div>
                             </a>
