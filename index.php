@@ -61,7 +61,22 @@ function trim_text($str,$symbols_number=300){ //функция для обрез
     }
     return $trim_str;
 }
-
+function time_delta($post_time){    //подсчет разницы времени между публикацией и текущей датой
+    //$date_now=date("Y-m-d h:i:s",time());
+    $date_now=date_create("now");
+    $post_time=date_create($post_time);
+    $diff=date_diff($date_now,$post_time);
+    if(($diff->days)>35){ //берем свойство days из объекта типа DateInterval
+        $delta=date_interval_format($diff,"%m").' месяцев';
+    }
+    elseif (($diff->days)<35 && ($diff->days)>7){
+        $delta=date_interval_format($diff,"%m").' недель';
+    }
+    else {
+        $delta=date_interval_format($diff,"%m").' дней';
+    }
+    return $delta;
+}
 require_once('helpers.php');
 $page_content=include_template('main.php',['posts'=>$posts,'text_max_symbols_number'=>$text_max_symbols_number]);
 $layout_content=include_template('layout.php',['user_name'=>$user_name,'page_title'=>$page_title,'is_auth'=>$is_auth,'page_content'=>$page_content]);
