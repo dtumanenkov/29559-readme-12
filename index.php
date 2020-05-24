@@ -61,23 +61,8 @@ function trim_text($str,$symbols_number=300){ //функция для обрез
     }
     return $trim_str;
 }
-function include_template($name_of_template, array $data = [])
-{
-    $name_of_template = 'templates/' . $name_of_template;
-    $result = '';
 
-    if (!is_readable($name_of_template)) {
-        return $result;
-    }
-
-    ob_start();
-    extract($data);
-    require $name_of_template;
-
-    $result = ob_get_clean();
-
-    return $result;
-}
+require_once('helpers.php');
 $page_content=include_template('main.php',['posts'=>$posts,'text_max_symbols_number'=>$text_max_symbols_number]);
 $layout_content=include_template('layout.php',['user_name'=>$user_name,'page_title'=>$page_title,'is_auth'=>$is_auth,'page_content'=>$page_content]);
 print($layout_content);
