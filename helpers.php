@@ -255,7 +255,7 @@ function generate_random_date($index)
     $timename = key($delta);
 
     $ts = strtotime("$timeval $timename ago");
-    $dt = date('Y-m-d H:i:s', $ts);
+    $dt = date('d.m.Y H:i', $ts);
 
     return $dt;
 }

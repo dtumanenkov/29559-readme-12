@@ -62,8 +62,33 @@ function trim_text($str,$symbols_number=300){ //функция для обрез
     return $trim_str;
 }
 function time_delta($post_time){    //подсчет разницы времени между публикацией и текущей датой
-    //$date_now=date("Y-m-d h:i:s",time());
-    $date_now=date_create("now");
+    $ts=time();
+    $sec_in_hour=3600;
+    $sec_in_day=86400;
+    $sec_in_week=604800;
+    $sec_in_month=2419200;
+    $end_ts=strtotime($post_time);
+    $ts_diff=$ts-$end_ts;
+    if($ts_diff<=60){ //менее 60 сек
+        return 'менее минуты назад';
+    }
+    elseif($ts_diff<=3600 && $ts_diff>60){ //менее 60 минут
+        return floor($ts_diff/60).get_noun_plural_form(floor($ts_diff/60),' минуту назад',' минуты назад',' минут назад');
+    }
+    elseif($ts_diff<=86400 && $ts_diff>3600){ //менее 24 часов но более 60 минут
+        return floor($ts_diff/$sec_in_hour).get_noun_plural_form(floor($ts_diff/$sec_in_hour),' час назад',' часа назад',' часов назад');
+    }
+    elseif($ts_diff<=604800 && $ts_diff>86400) {//менее 7 дней, но больше 24 часов
+        return floor($ts_diff/$sec_in_day).get_noun_plural_form(floor($ts_diff/$sec_in_day),' день назад',' дня назад',' дней назад');
+    }
+    elseif($ts_diff<=2419200 && $ts_diff>604800) {//менее 5 недель, но больше 7 дней
+        return floor($ts_diff/$sec_in_week).get_noun_plural_form(floor($ts_diff/$sec_in_week),' неделю назад',' недели назад',' недель назад');
+    }
+    else {
+        return floor($ts_diff/$sec_in_month).get_noun_plural_form(floor($ts_diff/$sec_in_month),' месяц назад',' месяца назад',' месяцев назад');
+    }
+    //доделать второй вариант потом.
+ /*   $date_now=date_create("now");
     $post_time=date_create($post_time);
     $diff=date_diff($date_now,$post_time);
     if(($diff->days)>35){ //берем свойство days из объекта типа DateInterval
@@ -76,6 +101,7 @@ function time_delta($post_time){    //подсчет разницы времен
         $delta=date_interval_format($diff,"%m").' дней';
     }
     return $delta;
+ */
 }
 require_once('helpers.php');
 $page_content=include_template('main.php',['posts'=>$posts,'text_max_symbols_number'=>$text_max_symbols_number]);
