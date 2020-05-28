@@ -64,47 +64,44 @@ function trim_text($str,$symbols_number = 300){ //функция для обре
     }
     return $trim_str;
 }
-function time_delta($post_time){    //подсчет разницы времени между публикацией и текущей датой
-    $ts = time();
-    $end_ts = strtotime($post_time);
-    $ts_diff = $ts - $end_ts;
 
-    if ($ts_diff <= 60) { //менее 60 сек
+/**
+ * Подсчет разницы времени между публикацией и текущей датой
+ *
+ * @param $post_time - дата публикации
+ *
+ * @author
+ *
+ * @return string
+ */
+function time_delta($post_time){
+    $end_ts = strtotime($post_time);
+    $ts_diff = time() - $end_ts;
+
+    if ($ts_diff <= 60) { /**менее 60 сек */
         return 'менее минуты назад';
 
-    } elseif ($ts_diff <= 3600 && $ts_diff > 60) { //менее 60 минут
+    } elseif ($ts_diff <= SEC_IN_HOUR && $ts_diff > 60) { /**менее 60 минут*/
 
         return floor($ts_diff / 60).get_noun_plural_form(floor($ts_diff / 60),
                 ' минуту назад',' минуты назад',' минут назад');
-    } elseif ($ts_diff <= 86400 && $ts_diff > 3600) { //менее 24 часов но более 60 минут
+    } elseif ($ts_diff <= SEC_IN_DAY && $ts_diff > SEC_IN_HOUR) { /**менее 24 часов но более 60 минут*/
 
-        return floor($ts_diff / sec_in_hour).get_noun_plural_form(floor($ts_diff / sec_in_hour),
+        return floor($ts_diff / SEC_IN_HOUR).get_noun_plural_form(floor($ts_diff / SEC_IN_HOUR),
                 ' час назад',' часа назад',' часов назад');
-    } elseif ($ts_diff <= 604800 && $ts_diff > 86400) {//менее 7 дней, но больше 24 часов
+    } elseif ($ts_diff <= SEC_IN_WEEK && $ts_diff > SEC_IN_DAY) { /**менее 7 дней, но больше 24 часов*/
 
-        return floor($ts_diff / sec_in_day).get_noun_plural_form(floor($ts_diff / sec_in_day),
+        return floor($ts_diff / SEC_IN_DAY).get_noun_plural_form(floor($ts_diff / SEC_IN_DAY),
                 ' день назад',' дня назад',' дней назад');
-    } elseif ($ts_diff <= 2419200 && $ts_diff > 604800) {//менее 5 недель, но больше 7 дней
+    } elseif ($ts_diff <= SEC_IN_MONTH && $ts_diff > SEC_IN_WEEK) { /**менее 5 недель, но больше 7 дней*/
 
-        return floor($ts_diff / sec_in_week).get_noun_plural_form(floor($ts_diff / sec_in_week),
+        return floor($ts_diff / SEC_IN_WEEK).get_noun_plural_form(floor($ts_diff / SEC_IN_WEEK),
                 ' неделю назад',' недели назад',' недель назад');
     } else {
-        return floor($ts_diff / sec_in_month).get_noun_plural_form(floor($ts_diff / sec_in_month),
+        return floor($ts_diff / SEC_IN_MONTH).get_noun_plural_form(floor($ts_diff / SEC_IN_MONTH),
                 ' месяц назад',' месяца назад',' месяцев назад');
     }
-    //доделать второй вариант потом.
- /*   $date_now = date_create("now");
-    $post_time = date_create($post_time);
-    $diff = date_diff($date_now,$post_time);
-    if(($diff -> days) > 35){ //берем свойство days из объекта типа DateInterval
-        $delta = date_interval_format($diff,"%m").' месяцев';
-    } elseif (($diff -> days) < 35 && ($diff -> days) > 7){
-        $delta=date_interval_format($diff,"%m").' недель';
-    } else {
-        $delta=date_interval_format($diff,"%m").' дней';
-    }
-    return $delta;
- */
+
 }
 $page_content = include_template('main.php',['posts' => $posts,
     'text_max_symbols_number' => $text_max_symbols_number]);
