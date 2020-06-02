@@ -70,7 +70,7 @@ function trim_text($str,$symbols_number = 300){ //функция для обре
  *
  * @param $post_time - дата публикации
  *
- * @author
+ * @author Tumanenkov Denis, skyline400@gmail.com
  *
  * @return string
  */
