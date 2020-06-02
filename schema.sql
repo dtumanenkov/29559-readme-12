@@ -6,11 +6,11 @@ USE readme;
 
 CREATE TABLE users(
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_date_of_registration TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    user_email  VARCHAR(128) NOT NULL UNIQUE,
-    user_login VARCHAR(128) NOT NULL UNIQUE,
-    user_password VARCHAR(64) NOT NULL,
-    user_avatar TEXT
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    email  VARCHAR(128) NOT NULL UNIQUE,
+    login VARCHAR(128) NOT NULL UNIQUE,
+    password VARCHAR(64) NOT NULL,
+    avatar VARCHAR(256)
     );
 
 CREATE TABLE content_types(
@@ -20,17 +20,17 @@ CREATE TABLE content_types(
     );
 
 CREATE TABLE posts(
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    post_date_of_publication TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    post_header TEXT,
-    post_content LONGTEXT,
-    post_author VARCHAR(128),
-    post_image LONGTEXT,
-    post_video LONGTEXT,
-    post_link LONGTEXT,
-    post_views INT UNSIGNED DEFAULT 0,
-    user_id INT UNSIGNED NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
+    post_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    date_of_publication TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    header TEXT,
+    content LONGTEXT,
+    author VARCHAR(128),
+    image LONGTEXT,
+    video LONGTEXT,
+    link LONGTEXT,
+    views INT UNSIGNED DEFAULT 0,
+    author_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES users(id),
     content_type_id INT UNSIGNED NOT NULL,
     FOREIGN KEY (content_type_id) REFERENCES content_types(id)
     );
@@ -44,18 +44,18 @@ CREATE TABLE posts_hashtags(
     post_id INT UNSIGNED NOT NULL,
     hashtag_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (post_id,hashtag_id),
-    FOREIGN KEY (post_id) REFERENCES posts(id),
+    FOREIGN KEY (post_id) REFERENCES posts(post_id),
     FOREIGN KEY (hashtag_id) REFERENCES hashtags(id)
     );
 
 CREATE TABLE comments(
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    comment_date_of_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    comment_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     comment TEXT NOT NULL,
     user_id INT UNSIGNED NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     post_id INT UNSIGNED NOT NULL,
-    FOREIGN KEY (post_id) REFERENCES posts(id)
+    FOREIGN KEY (post_id) REFERENCES posts(post_id)
     );
 
 CREATE TABLE likes(
@@ -63,7 +63,7 @@ CREATE TABLE likes(
     post_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (user_id,post_id),
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (post_id) REFERENCES posts(id)
+    FOREIGN KEY (post_id) REFERENCES posts(post_id)
     );
 
 CREATE TABLE subscriptions(
@@ -75,17 +75,13 @@ CREATE TABLE subscriptions(
     );
 
 CREATE TABLE messages(
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    message_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     message_date_of_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     message TEXT NOT NULL,
-    user_id INT UNSIGNED NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    address_user_id INT UNSIGNED NOT NULL,
-    FOREIGN KEY(address_user_id) REFERENCES users(id)
+    author_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES users(id),
+    recipient_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY(recipient_id) REFERENCES users(id)
     );
 
-CREATE TABLE roles(
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    roles VARCHAR(128) NOT NULL UNIQUE
-    );
 
