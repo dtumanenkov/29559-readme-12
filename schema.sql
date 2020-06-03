@@ -24,7 +24,7 @@ CREATE TABLE posts(
     date_of_publication TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     header TEXT,
     content LONGTEXT,
-    author VARCHAR(128),
+    quote_author VARCHAR(128),
     image LONGTEXT,
     video LONGTEXT,
     link LONGTEXT,
