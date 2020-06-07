@@ -75,3 +75,4 @@ INSERT INTO likes SET user_id = 1, post_id = 4;
 
 /* подписаться на пользователя */
 INSERT INTO subscriptions SET subscription_user_id = 1, user_id = 2;
+/*  */
