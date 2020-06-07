@@ -103,6 +103,23 @@ function time_delta($post_time){
     }
 
 }
+/* Работа с БД  */
+$con = mysqli_connect("localhost","mysql","mysql","readme");
+if(!$con){
+    print("Error!".mysqli_connect_error());
+}
+else{
+    mysqli_set_charset($con, "utf8");
+    print("Соединение установлено");
+    $user_number=rand(0,1000);
+    $sql = "INSERT INTO users(login, email, password) VALUES ($user_number, $user_number, 'pass')";
+    $result = mysqli_query($con , $sql);
+    if (!$result){
+        $error = mysqli_error(($con));
+        print_r("Fuck!".$error);
+    }
+}
+
 $page_content = include_template('main.php',['posts' => $posts,
     'text_max_symbols_number' => $text_max_symbols_number]);
 $layout_content = include_template('layout.php',['user_name' => $user_name,'page_title' => $page_title,
