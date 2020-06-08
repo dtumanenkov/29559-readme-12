@@ -104,20 +104,32 @@ function time_delta($post_time){
 
 }
 /* Работа с БД  */
+
 $con = mysqli_connect("localhost","mysql","mysql","readme");
+
 if(!$con){
     print("Error!".mysqli_connect_error());
 }
 else{
     mysqli_set_charset($con, "utf8");
     print("Соединение установлено");
-    $user_number=rand(0,1000);
-    $sql = "INSERT INTO users(login, email, password) VALUES ($user_number, $user_number, 'pass')";
-    $result = mysqli_query($con , $sql);
-    if (!$result){
-        $error = mysqli_error(($con));
-        print_r("Fuck!".$error);
+    $sql_content_types = "SELECT content_name FROM content_types";
+    $sql_posts_list = "SELECT p.header, u.login, p.views FROM posts p
+	        INNER JOIN users u ON p.author_id = u.id
+	        ORDER BY p.views DESC; ";
+    /* Типы постов  */
+    if ($result1 = mysqli_query($con , $sql_content_types)){
+        $content_types = mysqli_fetch_all($result1);
+    } else {
+        print mysqli_error($con);
     }
+    /* Список постов  */
+    if ($result2 = mysqli_query($con , $sql_posts_list)){
+        $posts_list = mysqli_fetch_all($result2);
+    } else {
+        print mysqli_error($con);
+    }
+
 }
 
 $page_content = include_template('main.php',['posts' => $posts,
