@@ -88,7 +88,7 @@
         <div class="popular__posts">
             <?php foreach ($posts as $key => $post): ?>
                 <?php $post_date = generate_random_date($key); ?> <!--переменная с датой публикации -->
-                <article class="popular__post post <?=$post["content_name"]?>">
+                <article class="popular__post post <?=$post["content_icon_name"]?>">
                     <header class="post__header">
                         <h2><?=$post["header"]?></h2>
                     </header>
