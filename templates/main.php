@@ -88,13 +88,13 @@
         <div class="popular__posts">
             <?php foreach ($posts as $key => $post): ?>
                 <?php $post_date = generate_random_date($key); ?> <!--переменная с датой публикации -->
-                <article class="popular__post post <?=$post["type"]?>">
+                <article class="popular__post post <?=$post["content_name"]?>">
                     <header class="post__header">
-                        <h2><?=$post["post_header"]?></h2>
+                        <h2><?=$post["header"]?></h2>
                     </header>
                     <div class="post__main">
                         <!--здесь содержимое карточки-->
-                        <?php switch ($post["type"]):
+                        <?php switch ($post["content_icon_name"]):
                             case 'post-quote': ?>
                                 <!--содержимое для поста-цитаты-->
                                 <blockquote>
@@ -114,10 +114,10 @@
                                     <a class="post-text__more-link" href="#">Читать далее</a>
                                 <?php endif; ?>
                                 <?php break;?>
-                            <?php case 'post-photo': ?>
+                            <?php case 'post-picture': ?>
                                 <!--содержимое для поста-фото-->
                                 <div class="post-photo__image-wrapper">
-                                    <img src="img/<?=htmlspecialchars($post["content"])?>" alt="Фото от пользователя" width="360" height="240">
+                                    <img src="img/<?=htmlspecialchars($post["image"])?>" alt="Фото от пользователя" width="360" height="240">
                                 </div>
                                 <?php break;?>
                             <?php case 'post-link': ?>
@@ -129,7 +129,7 @@
                                                 <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
                                             </div>
                                             <div class="post-link__info">
-                                                <h3><?=$post["post_header"]?></h3>
+                                                <h3><?=$post["link"]?></h3>
                                             </div>
                                         </div>
                                         <span><?=htmlspecialchars($post["content"])?></span>
@@ -146,7 +146,7 @@
                                     <img class="post__author-avatar" src="img/<?=htmlspecialchars($post["avatar"])?>" alt="Аватар пользователя">
                                 </div>
                                 <div class="post__info">
-                                    <b class="post__author-name"><?=htmlspecialchars($post["user_name"])?></b>
+                                    <b class="post__author-name"><?=htmlspecialchars($post["login"])?></b>
                                     <time class="post__time" datetime="<?= date("d.m.Y H:i",strtotime($post_date)) ?>"><?=time_delta($post_date)?></time>
                                 </div>
                             </a>

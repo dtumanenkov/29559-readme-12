@@ -113,26 +113,28 @@ if(!$con){
 else{
     mysqli_set_charset($con, "utf8");
     print("Соединение установлено");
-    $sql_content_types = "SELECT content_name FROM content_types";
-    $sql_posts_list = "SELECT p.header, u.login, p.views FROM posts p
+    $sql_content_types = "SELECT content_name, content_icon_name FROM content_types";
+    $sql_posts_list = "SELECT p.date_of_publication, p.header, p.content, p.quote_author, p.image, p.video, p.link,
+            p.views, u.login, u.avatar, c.content_name, c.content_icon_name FROM posts p
 	        INNER JOIN users u ON p.author_id = u.id
+            INNER JOIN content_types c ON p.content_type_id = c.id
 	        ORDER BY p.views DESC; ";
     /* Типы постов  */
     if ($result1 = mysqli_query($con , $sql_content_types)){
-        $content_types = mysqli_fetch_all($result1);
+        $content_types = mysqli_fetch_all($result1, MYSQLI_ASSOC);
     } else {
         print mysqli_error($con);
     }
     /* Список постов  */
     if ($result2 = mysqli_query($con , $sql_posts_list)){
-        $posts_list = mysqli_fetch_all($result2);
+        $posts_list = mysqli_fetch_all($result2,MYSQLI_ASSOC);
     } else {
         print mysqli_error($con);
     }
 
 }
 
-$page_content = include_template('main.php',['posts' => $posts,
+$page_content = include_template('main.php',['posts' => $posts_list,
     'text_max_symbols_number' => $text_max_symbols_number]);
 $layout_content = include_template('layout.php',['user_name' => $user_name,'page_title' => $page_title,
     'is_auth' => $is_auth,'page_content' => $page_content]);
