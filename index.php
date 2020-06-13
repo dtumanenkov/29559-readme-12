@@ -5,45 +5,7 @@ $is_auth = rand(0, 1);
 $text_max_symbols_number = 300;//максимальная длина текстового содержимого карточки поста
 $user_name = 'Denis'; // укажите здесь ваше имя
 $page_title = 'Readme';
-$posts=[
-    [
-        'post_header'=>'Цитата',
-        'type'=>'post-quote',
-        'content'=>'Мы в жизни любим только раз, а после ищем лишь похожих',
-        'user_name'=>'Лариса',
-        'avatar'=>'userpic-larisa-small.jpg'
-    ],
-    [
-        'post_header'=>'Игра престолов',
-        'type'=>'post-text',
-        'content'=>'Главная задача этой функции урезать текст по отдельным словам. Это значит, что строка с обрезанным текстом не должна заканчиваться частью слова. Чтобы соблюсти это требование вам вначале потребуется разбить весь текст на отдельные слова (по пробелам).
-                    Затем в цикле вы последовательно считаете длину каждого слова и останавливаете цикл, когда суммарная длина символов в посчитанных словах начинает превышать ограничение.
-                    Теперь нужно сложить отдельные слова обратно в строку и добавить в конец этой строки знак многоточия.',
-        'user_name'=>'Владик',
-        'avatar'=>'userpic.jpg'
-    ],
-    [
-        'post_header'=>'Наконец, обработал фотки!',
-        'type'=>'post-photo',
-        'content'=>'rock-medium.jpg',
-        'user_name'=>'Виктор',
-        'avatar'=>'	userpic-mark.jpg'
-    ],
-    [
-        'post_header'=>'Моя мечта',
-        'type'=>'post-photo',
-        'content'=>'coast-medium.jpg',
-        'user_name'=>'Лариса',
-        'avatar'=>'userpic-larisa-small.jpg'
-    ],
-    [
-        'post_header'=>'Лучшие курсы',
-        'type'=>'post-link',
-        'content'=>"<script>alert('Fuck')</script>",   //xss проверка
-        'user_name'=>'Владик',
-        'avatar'=>'userpic.jpg'
-    ],
-];
+
 function trim_text($str,$symbols_number = 300){ //функция для обрезки длинного текста
     $trim_str = "";//переменная для работы со строкой
     if (strlen($str) < $symbols_number) {   //если длина меньше 300 -  просто возвращаем строку
@@ -103,10 +65,34 @@ function time_delta($post_time){
     }
 
 }
-$page_content = include_template('main.php',['posts' => $posts,
-    'text_max_symbols_number' => $text_max_symbols_number]);
-$layout_content = include_template('layout.php',['user_name' => $user_name,'page_title' => $page_title,
-    'is_auth' => $is_auth,'page_content' => $page_content]);
+/* Работа с БД  */
+
+$sql_posts_list = "SELECT p.date_of_publication, p.header, p.content, p.quote_author, p.image, p.video, p.link,
+            p.views, p.content_type_id, u.login, u.avatar, c.content_name, c.content_icon_name
+            FROM posts p
+	        INNER JOIN users u ON p.author_id = u.id
+            INNER JOIN content_types c ON p.content_type_id = c.id
+	        ORDER BY p.views DESC LIMIT 6; ";
+
+$sql_content_types = "SELECT content_name, content_icon_name, i.icon_name, i.width, i.height
+            FROM content_types
+            INNER JOIN icon_sizes_for_content_types i ON i.icon_size_id=content_types.id; ";
+/* Типы постов  */
+$content_types_sql_result = get_array_from_sql_query($con, $sql_content_types);
+
+/* Список постов  */
+$posts_list = get_array_from_sql_query($con, $sql_posts_list);
+
+$page_content = include_template('main.php',
+    ['posts_list' => $posts_list,
+    'text_max_symbols_number' => $text_max_symbols_number,
+    'content_types_sql_result' => $content_types_sql_result]);
+
+$layout_content = include_template('layout.php',
+    ['user_name' => $user_name,
+    'page_title' => $page_title,
+    'is_auth' => $is_auth,
+    'page_content' => $page_content]);
 print($layout_content);
-?>
+
 

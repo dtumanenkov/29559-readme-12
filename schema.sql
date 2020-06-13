@@ -15,7 +15,7 @@ CREATE TABLE users(
 
 CREATE TABLE content_types(
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    content_name VARCHAR (128) NOT NULL UNIQUE ,
+    content_name VARCHAR (128) NOT NULL UNIQUE,
     content_icon_name VARCHAR (128) NOT NULL UNIQUE
     );
 
@@ -83,5 +83,11 @@ CREATE TABLE messages(
     recipient_id INT UNSIGNED NOT NULL,
     FOREIGN KEY(recipient_id) REFERENCES users(id)
     );
-
+CREATE TABLE icon_sizes_for_content_types(
+    icon_size_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    icon_name VARCHAR (128) NOT NULL UNIQUE,
+    width INT NOT NULL,
+    height INT NOT NULL,
+    FOREIGN KEY (icon_size_id) REFERENCES content_types(id)
+);
 

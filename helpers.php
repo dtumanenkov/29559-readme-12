@@ -259,3 +259,17 @@ function generate_random_date($index)
 
     return $dt;
 }
+/**
+ * Возвращаем ассоциативный массив из SQL запроса
+ * @param string $connection подключение к БД
+ * @param string $sql_query sql запрос
+ * @return array
+ */
+function get_array_from_sql_query($connection, $sql_query){
+    $query = mysqli_query($connection, $sql_query);
+    if ($query){
+        return $query_array = mysqli_fetch_all($query,MYSQLI_ASSOC);
+    } else {
+        exit(mysqli_error($query));
+    }
+}

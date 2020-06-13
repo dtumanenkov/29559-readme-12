@@ -3,9 +3,9 @@ USE readme;
 /* Добавляем пользователей */
 INSERT INTO users
     (created_at, email, login, password, avatar)
-VALUES ('2020-01-01 20:00', 'larisa@gmail.com', 'Лариса', 'strongpass', 'img/userpic-larisa-small.jpg'),
-       ('2020-02-02 22:00', 'vladik@gmail.com', 'Владик', 'strongerpass', 'img/userpic.jpg'),
-       ('2020-03-03 23:00', 'victor@gmail.com', 'Виктор', 'abc321', 'img/userpic-mark.jpg');
+VALUES ('2020-01-01 20:00', 'larisa@gmail.com', 'Лариса', 'strongpass', 'userpic-larisa-small.jpg'),
+       ('2020-02-02 22:00', 'vladik@gmail.com', 'Владик', 'strongerpass', 'userpic.jpg'),
+       ('2020-03-03 23:00', 'victor@gmail.com', 'Виктор', 'abc321', 'userpic-mark.jpg');
 
 /* Добавляем типы контента */
 INSERT INTO content_types
@@ -44,7 +44,10 @@ VALUES ('Моя мечта','coast-medium.jpg', 300, 1, 3);
 INSERT INTO posts
     (header, link, views, author_id, content_type_id)
 VALUES ('Лучшие курсы','www.htmlacademy.ru', 400, 2, 2);
-
+/*видео*/
+INSERT INTO posts
+(header, link, views, author_id, content_type_id)
+VALUES ('Лучшее видео','www.htmlacademy.ru', 130, 2, 4);
 /*Добаляем комментарии*/
 INSERT INTO comments
     (comment, user_id, post_id)
@@ -53,6 +56,15 @@ VALUES ('Всем привет, кто в этом чате!', 1, 1),
        ('Аналогично!', 3 , 1),
        ('Отличное фото', 2, 3),
        ('Ссылка не открывается =(', 1, 5);
+
+/*Добавляем размеры картинок иконок типов постов */
+INSERT INTO  icon_sizes_for_content_types
+    (icon_size_id, icon_name, width, height)
+VALUES (1,'text', 20, 21),
+       (2, 'quote', 21, 20),
+       (3, 'photo', 22, 18),
+       (4, 'video', 24, 16),
+       (5, 'link', 21, 18);
 
 /*Запросы*/
 /* получить список постов с сортировкой по популярности и вместе с именами авторов и типом контента*/
@@ -75,3 +87,4 @@ INSERT INTO likes SET user_id = 1, post_id = 4;
 
 /* подписаться на пользователя */
 INSERT INTO subscriptions SET subscription_user_id = 1, user_id = 2;
+
