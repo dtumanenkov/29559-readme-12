@@ -41,52 +41,24 @@
                             <span>Все</span>
                         </a>
                     </li>
+                    <!-- Выводим список типов контента в зависимости от типа постов  на странице-->
+                    <?php $unique_post_type_list = array_unique(array_column($posts_list,"content_type_id"));?> <!--список уникальных типов постов на странице -->
+                    <?php foreach ($unique_post_type_list as $unique_post): ?>
                     <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--photo button" href="#">
+                        <a class="filters__button filters__button--<?= $content_types_sql_result[$unique_post]['icon_name'] ?>" href="#">
                             <span class="visually-hidden">Фото</span>
-                            <svg class="filters__icon" width="22" height="18">
-                                <use xlink:href="#icon-filter-photo"></use>
+                            <svg class="filters__icon" width="<?=$content_types_sql_result[$unique_post-1]['width']?>" height="<?=$content_types_sql_result[$unique_post]['height']?>">
+                                <use xlink:href="#icon-filter-<?= $content_types_sql_result[$unique_post-1]['icon_name'] ?>"></use>
                             </svg>
                         </a>
                     </li>
-                    <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--video button" href="#">
-                            <span class="visually-hidden">Видео</span>
-                            <svg class="filters__icon" width="24" height="16">
-                                <use xlink:href="#icon-filter-video"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--text button" href="#">
-                            <span class="visually-hidden">Текст</span>
-                            <svg class="filters__icon" width="20" height="21">
-                                <use xlink:href="#icon-filter-text"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--quote button" href="#">
-                            <span class="visually-hidden">Цитата</span>
-                            <svg class="filters__icon" width="21" height="20">
-                                <use xlink:href="#icon-filter-quote"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--link button" href="#">
-                            <span class="visually-hidden">Ссылка</span>
-                            <svg class="filters__icon" width="21" height="18">
-                                <use xlink:href="#icon-filter-link"></use>
-                            </svg>
-                        </a>
-                    </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>
 
         <div class="popular__posts">
-            <?php foreach ($posts as $key => $post): ?>
+            <?php foreach ($posts_list as $key => $post): ?>
                 <?php $post_date = generate_random_date($key); ?> <!--переменная с датой публикации -->
                 <article class="popular__post post <?=$post["content_icon_name"]?>">
                     <header class="post__header">

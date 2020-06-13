@@ -265,8 +265,8 @@ function generate_random_date($index)
  * @param string $sql_query sql запрос
  * @return array
  */
-function get_array_from_sql_query($connection,$sql_query){
-    $query = mysqli_query($connection , $sql_query);
+function get_array_from_sql_query($connection, $sql_query){
+    $query = mysqli_query($connection, $sql_query);
     if ($query){
         return $query_array = mysqli_fetch_all($query,MYSQLI_ASSOC);
     } else {
