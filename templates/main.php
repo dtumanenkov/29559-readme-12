@@ -72,24 +72,24 @@
                                 <blockquote>
                                     <p>
                                         <!--здесь текст-->
-                                        <?=htmlspecialchars(htmlspecialchars($post["content"]))?>
+                                        <?=htmlspecialchars(htmlspecialchars($post["content"],ENT_QUOTES))?>
                                     </p>
                                     <cite>Неизвестный</cite>
                                 </blockquote>
                                 <?php break;?>
                             <?php case 'post-text': ?>
                                 <!--содержимое для поста-текста-->
-                                <?php if(strlen(htmlspecialchars($post["content"]))<$text_max_symbols_number): ?>
-                                    <p><?=htmlspecialchars($post["content"])?></p>
+                                <?php if(strlen(htmlspecialchars($post["content"],ENT_QUOTES))<$text_max_symbols_number): ?>
+                                    <p><?=htmlspecialchars($post["content"],ENT_QUOTES)?></p>
                                 <?php else: ?>
-                                    <p><?php echo(trim_text(htmlspecialchars($post["content"]),$text_max_symbols_number))?></p>
+                                    <p><?php echo(trim_text(htmlspecialchars($post["content"],ENT_QUOTES),$text_max_symbols_number))?></p>
                                     <a class="post-text__more-link" href="#">Читать далее</a>
                                 <?php endif; ?>
                                 <?php break;?>
                             <?php case 'post-picture': ?>
                                 <!--содержимое для поста-фото-->
                                 <div class="post-photo__image-wrapper">
-                                    <img src="img/<?=htmlspecialchars($post["image"])?>" alt="Фото от пользователя" width="360" height="240">
+                                    <img src="img/<?=htmlspecialchars($post["image"],ENT_QUOTES)?>" alt="Фото от пользователя" width="360" height="240">
                                 </div>
                                 <?php break;?>
                             <?php case 'post-link': ?>
@@ -104,7 +104,7 @@
                                                 <h3><?=$post["link"]?></h3>
                                             </div>
                                         </div>
-                                        <span><?=htmlspecialchars($post["content"])?></span>
+                                        <span><?=htmlspecialchars($post["content"],ENT_QUOTES)?></span>
                                     </a>
                                 </div>
                                 <?php break;?>
@@ -115,10 +115,10 @@
                             <a class="post__author-link" href="#" title="<?= $post_date ?>"> <!-- генерируем случайную дату по индексу массива постов-->
                                 <div class="post__avatar-wrapper">
                                     <!--укажите путь к файлу аватара-->
-                                    <img class="post__author-avatar" src="img/<?=htmlspecialchars($post["avatar"])?>" alt="Аватар пользователя">
+                                    <img class="post__author-avatar" src="img/<?=htmlspecialchars($post["avatar"],ENT_QUOTES)?>" alt="Аватар пользователя">
                                 </div>
                                 <div class="post__info">
-                                    <b class="post__author-name"><?=htmlspecialchars($post["login"])?></b>
+                                    <b class="post__author-name"><?=htmlspecialchars($post["login"],ENT_QUOTES)?></b>
                                     <time class="post__time" datetime="<?= date("d.m.Y H:i",strtotime($post_date)) ?>"><?=time_delta($post_date)?></time>
                                 </div>
                             </a>

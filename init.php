@@ -6,9 +6,10 @@ define("SEC_IN_DAY",86400);
 define("SEC_IN_WEEK",604800);
 define("SEC_IN_MONTH",2419200);
 $con = mysqli_connect("localhost","mysql","mysql","readme");
+
 if(!$con){
     exit("Error!".mysqli_connect_error());
 }
-else{
-    mysqli_set_charset($con, "utf8");
-}
+
+mysqli_set_charset($con, "utf8");
+
