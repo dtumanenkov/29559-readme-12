@@ -340,3 +340,19 @@ function trim_text($str,$symbols_number = 300){ //
     }
     return $trim_str;
 }
+
+/**
+ * Добавляем параметры GET в url страницы
+ * @param string $category_id категория элементов
+ * @param string $page_url путь текущей страницы
+ *
+ * @return array массив данных
+ */
+function create_url($category_id, string $page_url="index.php"){
+    $parameters=$_GET;
+    $parameters['category_id']=$category_id;
+    $query=http_build_query($parameters);
+    $url="/".$page_url."?".$query;
+    return $url;
+    //return("/".$page_url."?".$query);
+}
