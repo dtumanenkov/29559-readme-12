@@ -8,7 +8,7 @@
                 <b class="popular__sorting-caption sorting__caption">Сортировка:</b>
                 <ul class="popular__sorting-list sorting__list">
                     <li class="sorting__item sorting__item--popular">
-                        <a class="sorting__link sorting__link--active" href="#">
+                        <a class="sorting__link <?=($_GET['sort_value'] === 'views' || !isset($_GET['sort_value'])) ? 'sorting__link--active' : ""; ?> " href="#">
                             <span>Популярность</span>
                             <svg class="sorting__icon" width="10" height="12">
                                 <use xlink:href="#icon-sort"></use>
@@ -16,7 +16,7 @@
                         </a>
                     </li>
                     <li class="sorting__item">
-                        <a class="sorting__link" href="#">
+                        <a class="sorting__link <?=($_GET['sort_value'] === 'likes') ? 'sorting__link--active' : ""; ?>" href="#">
                             <span>Лайки</span>
                             <svg class="sorting__icon" width="10" height="12">
                                 <use xlink:href="#icon-sort"></use>
@@ -24,7 +24,7 @@
                         </a>
                     </li>
                     <li class="sorting__item">
-                        <a class="sorting__link" href="#">
+                        <a class="sorting__link <?=($_GET['sort_value'] === 'post-date') ? 'sorting__link--active' : ""; ?>" href="#">
                             <span>Дата</span>
                             <svg class="sorting__icon" width="10" height="12">
                                 <use xlink:href="#icon-sort"></use>
@@ -62,7 +62,7 @@
                 <?php $post_date = generate_random_date($key); ?> <!--переменная с датой публикации -->
                 <article class="popular__post post <?=$post["content_icon_name"]?>">
                     <header class="post__header">
-                        <h2><?=$post["header"]?></h2>
+                        <h2><a href="post.php?post_id=<?= $post["post_id"]?>"><?= $post["header"] ?></a></h2>
                     </header>
                     <div class="post__main">
                         <!--здесь содержимое карточки-->
@@ -132,14 +132,14 @@
                                     <svg class="post__indicator-icon post__indicator-icon--like-active" width="20" height="17">
                                         <use xlink:href="#icon-heart-active"></use>
                                     </svg>
-                                    <span>0</span>
+                                    <span><?=$post["likes_count"] ?></span>
                                     <span class="visually-hidden">количество лайков</span>
                                 </a>
                                 <a class="post__indicator post__indicator--comments button" href="#" title="Комментарии">
                                     <svg class="post__indicator-icon" width="19" height="17">
                                         <use xlink:href="#icon-comment"></use>
                                     </svg>
-                                    <span>0</span>
+                                    <span><?=$post["comments_count"] ?></span>
                                     <span class="visually-hidden">количество комментариев</span>
                                 </a>
                             </div>
