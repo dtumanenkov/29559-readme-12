@@ -2,7 +2,7 @@
 /* Работа с БД  */
 
 /* Список популярных постов  */
-$sql_posts_list = "SELECT p.post_id, p.date_of_publication, p.header, p.content, p.quote_author, p.image, p.video, p.link,
+$sql_popular_posts_list = "SELECT p.post_id, p.date_of_publication, p.header, p.content, p.quote_author, p.image, p.video, p.link,
 p.views, p.content_type_id, u.login, u.avatar, c.content_name, c.content_icon_name, IFNULL(l.likes_count, 0) AS likes_count, IFNULL(com.comments_count, 0) AS comments_count
 FROM posts p
 INNER JOIN users u ON p.author_id = u.id

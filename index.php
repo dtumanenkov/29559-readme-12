@@ -7,17 +7,18 @@ $is_auth = rand(0, 1);
 $text_max_symbols_number = 300;//максимальная длина текстового содержимого карточки поста
 $user_name = 'Denis'; // укажите здесь ваше имя
 $page_title = 'Readme';
-
+$con = database_connecting('localhost',$user_name,'',$page_title);
 
 $content_types_sql_result = get_array_from_sql_query($con, $sql_content_types);
 
-/* Список постов  */
-$posts_list = get_array_from_sql_query($con, $sql_posts_list);
+/* Список  постов  */
+$posts_list = get_array_from_sql_query($con, $sql_popular_posts_list);
 
 /* Строка запроса: текущий активный тип контента, сортировки и порядок сортировки*/
-$get_active_content_type=filter_input(INPUT_GET,'content-type');
-$get_active_sorting_type=filter_input(INPUT_GET,'sorting-type');
-$get_sorting_order=filter_input(INPUT_GET,'sorting_order');
+$get_active_content_type = filter_input(INPUT_GET,'content-type');
+$get_active_sorting_type = filter_input(INPUT_GET,'sorting-type');
+$get_sorting_order = filter_input(INPUT_GET,'sorting_order');
+
 
 
 $page_content = include_template('main.php',

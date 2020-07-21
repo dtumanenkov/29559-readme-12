@@ -356,3 +356,22 @@ function create_url($category_id, string $page_url="index.php"){
     return $url;
     //return("/".$page_url."?".$query);
 }
+
+/**
+ * Подключение к БД
+ * @param string $host Хост
+ * @param string $user Имя пользователя
+ * @param string $password Пароль
+ * @param string $database Имя БД
+ *
+ * @return mysqli
+ */
+function database_connecting($host, $user, $password, $database)
+{
+    $con = mysqli_connect("localhost", "mysql", "mysql", "readme");
+    if (!$con) {
+        die("Error!" . mysqli_connect_error());
+    }
+    mysqli_set_charset($con, "utf8");
+    return $con;
+}
