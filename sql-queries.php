@@ -29,6 +29,7 @@ LEFT JOIN comments com ON com.post_id=p.post_id
 LEFT JOIN subscriptions sub ON sub.subscription_user_id=p.author_id
 WHERE p.post_id=1-
 GROUP BY l.post_id";
+
 /* Пост  */
 $sql_post = "SELECT p.post_id, p.date_of_publication, p.header, p.content, p.quote_author, p.image, p.video, p.link,
 p.views, p.content_type_id, p.author_id, c.content_name, c.content_icon_name,
