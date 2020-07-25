@@ -4,7 +4,7 @@ require_once "sql-queries.php";
 $post_id = isset($_GET['id']) ? $_GET['id'] : null;
 $link = database_connecting('localhost',$user_name,'',$page_title);
 
-$post = get_sql_post($link,$post_id);
+$post = get_array_from_sql_query($link,$post_id);
 
 if(!$post) {
     header("HTTP/1.0 404 Not Found");
