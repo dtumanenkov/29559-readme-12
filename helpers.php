@@ -345,16 +345,15 @@ function trim_text($str,$symbols_number = 300){ //
  * Добавляем параметры GET в url страницы
  * @param string $category_id категория элементов
  * @param string $page_url путь текущей страницы
- *
- * @return array массив данных
+ * @param string $sort_value тип сортировки
+ * @param string $sorting по возрастанию/убыванию
+ * @return string  URL-кодированная строка запроса
  */
-function create_url($category_id, string $page_url="index.php"){
-    $parameters=$_GET;
-    $parameters['category_id']=$category_id;
-    $query=http_build_query($parameters);
-    $url="/".$page_url."?".$query;
-    return $url;
-    //return("/".$page_url."?".$query);
+function create_url($category_id, $sort_value, $sorting, string $page_url="index.php"){
+    $parameters = $_GET;
+    $parameters['category_id'] = $category_id;
+    $query = http_build_query($parameters);
+    return "/".$page_url."?".$query;
 }
 
 /**
