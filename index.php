@@ -19,12 +19,23 @@ $get_active_content_type = filter_input(INPUT_GET,'content-type');
 $get_active_sorting_type = filter_input(INPUT_GET,'sorting-type');
 $get_sorting_order = filter_input(INPUT_GET,'sorting_order');
 
+/* параметры запросов*/
+$query_params=[];
+if($get_active_content_type){
+    $query_params['content_type_id'] = $get_active_content_type ?? 'all';
+    $query_params['sort_value'] = $get_active_sorting_type ?? 'views';
+    $query_params['sort_order'] = $get_sorting_order ?? 'DESC';
+}
 
+/* параметры сортировки */
 
 $page_content = include_template('main.php',
     ['posts_list' => $posts_list,
     'text_max_symbols_number' => $text_max_symbols_number,
-    'content_types_sql_result' => $content_types_sql_result]);
+    'content_types_sql_result' => $content_types_sql_result,
+    'content-type' => $get_active_content_type,
+    'sorting-type' => $get_active_sorting_type,
+    'sorting_order' => $get_sorting_order]);
 
 $layout_content = include_template('layout.php',
     ['user_name' => $user_name,
