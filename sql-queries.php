@@ -16,4 +16,16 @@ $sql_content_types = "SELECT id, content_name, content_icon_name, i.icon_name, i
 FROM content_types
 INNER JOIN icon_sizes_for_content_types i ON i.icon_size_id=content_types.id; ";
 
-/* Типы постов  */
+/* Пост по id */
+$get_post_id="SELECT p.*, ct.content_icon_name, u.avatar, u.login,
+IFNULL((SELECT COUNT(*) FROM likes l WHERE l.post_id=p.post_id), 0) AS likes_count,
+IFNULL((SELECT COUNT(*) FROM comments com WHERE com.post_id=p.post_id), 0) AS comments_count,
+IFNULL((SELECT COUNT(*) FROM subscriptions sub WHERE sub.subscription_user_id=p.author_id), 0) AS subscribers_count
+FROM posts p
+JOIN users u ON p.author_id=u.id
+JOIN content_types ct ON p.content_type_id=ct.id
+LEFT JOIN likes l ON l.post_id=p.post_id
+LEFT JOIN comments com ON com.post_id=p.post_id
+LEFT JOIN subscriptions sub ON sub.subscription_user_id=p.author_id
+WHERE p.post_id=1-
+GROUP BY l.post_id";
