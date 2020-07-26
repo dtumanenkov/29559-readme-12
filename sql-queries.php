@@ -100,6 +100,8 @@ function get_user_posts($link, $user_id){
     $result = get_array_from_sql_query($link, $sql);
     return empty($result) ? NULL : $result;
 }
+
+
 /* Пост
 $sql_post = "SELECT p.post_id, p.date_of_publication, p.header, p.content, p.quote_author, p.image, p.video, p.link,
 p.views, p.content_type_id, p.author_id, c.content_name, c.content_icon_name,
