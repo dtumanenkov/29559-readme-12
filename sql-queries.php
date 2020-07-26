@@ -101,13 +101,18 @@ function get_user_posts($link, $user_id){
     return empty($result) ? NULL : $result;
 }
 
+/**
+ * Количество постов пользователя по id
+ * @param mysqli $link
+ * @param string $user_id идентификатор пользователя
+ * @return int|NULL
+ */
+function get_user_posts_count($link, $user_id){
+    $sql = "SELECT COUNT(*) AS posts_count FROM posts p 
+    WHERE p.author_id = $user_id";
+    $result = get_array_from_sql_query($link, $sql);
+    return empty($result) ? NULL : $result;
+}
 
-/* Пост
-$sql_post = "SELECT p.post_id, p.date_of_publication, p.header, p.content, p.quote_author, p.image, p.video, p.link,
-p.views, p.content_type_id, p.author_id, c.content_name, c.content_icon_name,
-(SELECT COUNT(*) from likes WHERE p.post_id = likes.post_id) AS likes_count,
-(SELECT COUNT(*) from comments WHERE p.post_id = comments.post_id) AS comments_count
-FROM posts p
-INNER JOIN content_types c ON p.content_type_id = c.id
-";
-*/
+
+

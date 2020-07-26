@@ -92,5 +92,10 @@ VALUES (1, 4),
        (3, 2);
 
 /* подписаться на пользователя */
-INSERT INTO subscriptions SET subscription_user_id = 1, user_id = 2;
+INSERT INTO subscriptions
+    (subscription_user_id, user_id)
+VALUES (1,2),
+       (1,3),
+       (2,1),
+       (2,3);
 
