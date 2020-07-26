@@ -349,13 +349,14 @@ function trim_text($str,$symbols_number = 300){ //
  * @param string $sorting по возрастанию/убыванию
  * @return string  URL-кодированная строка запроса
  */
-function create_url($category_id, $sort_value, $sorting, string $page_url="index.php"){
+function create_url($category_id, $sort_value, $sorting, string $page_url = "index.php"){
     $parameters = $_GET;
-    $parameters['category_id'] = $category_id;
+    $parameters['content_type_id'] = $category_id;
     $parameters['sort_value'] = $sort_value;
     $parameters['sorting'] = $sorting;
     $query = http_build_query($parameters);
-    return "/".$page_url."?".$query;
+    $url = "/". $page_url. "?". $query;
+    return $url;
 }
 
 /**
@@ -369,7 +370,7 @@ function create_url($category_id, $sort_value, $sorting, string $page_url="index
  */
 function database_connecting($host, $user, $password, $database)
 {
-    $con = mysqli_connect("localhost", "mysql", "mysql", "readme");
+    $con = mysqli_connect("localhost", "root", "root", "readme");
     if (!$con) {
         die("Error!" . mysqli_connect_error());
     }

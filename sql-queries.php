@@ -19,9 +19,10 @@ function popular_post_list($link, $sort_value = 'views', $sorting = 'DESC', $lim
     INNER JOIN content_types c ON p.content_type_id = c.id
     LEFT JOIN (SELECT l.post_id, COUNT(*) as likes_count FROM likes l GROUP BY l.post_id) AS l ON l.post_id = p.post_id
     LEFT JOIN (SELECT com.post_id, COUNT(*) as comments_count FROM comments com GROUP BY com.post_id) AS com ON com.post_id=p.post_id
-    ORDER BY $sort_value $sorting LIMIT $limit ";
+    ORDER BY $sort_value DESC LIMIT $limit ";
     $result = get_array_from_sql_query($link, $sql);
     return empty($result) ? NULL : $result;
+        /*ORDER BY $sort_value $sorting LIMIT $limit "; */
 }
 /* Список популярных постов  */
 /**
@@ -42,7 +43,7 @@ function popular_post_category_sorting($link, $content_type, $sort_value = 'view
     INNER JOIN content_types c ON p.content_type_id = c.id
     LEFT JOIN (SELECT l.post_id, COUNT(*) as likes_count FROM likes l GROUP BY l.post_id) AS l ON l.post_id = p.post_id
     LEFT JOIN (SELECT com.post_id, COUNT(*) as comments_count FROM comments com GROUP BY com.post_id) AS com ON com.post_id=p.post_id
-    WHERE c.content_icon_name = $content_type
+    WHERE c.id = $content_type
     ORDER BY $sort_value $sorting";
     $result = get_array_from_sql_query($link, $sql);
     return empty($result) ? NULL : $result;
@@ -82,7 +83,7 @@ function get_post_id($link, $post_id)
     LEFT JOIN subscriptions sub ON sub.subscription_user_id = p.author_id
     WHERE p.post_id = $post_id
     GROUP BY l.post_id";
-    $result = get_array_from_sql_query($link,$sql);
+    $result = get_array_from_sql_query($link, $sql);
     return empty($result)? NULL : $result;
 }
 

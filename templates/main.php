@@ -8,7 +8,7 @@
                 <b class="popular__sorting-caption sorting__caption">Сортировка:</b>
                 <ul class="popular__sorting-list sorting__list">
                     <li class="sorting__item sorting__item--popular">
-                        <a class="sorting__link <?=($_GET['sort_value'] === 'views' || !isset($_GET['sort_value'])) ? 'sorting__link--active' : ""; ?> " href="#">
+                        <a class="sorting__link <?=($query_params['sort_value'] === 'views' || !isset($query_params['sort_value'])) ? 'sorting__link--active' : ""; ?> " href="#">
                             <span>Популярность</span>
                             <svg class="sorting__icon" width="10" height="12">
                                 <use xlink:href="#icon-sort"></use>
@@ -16,7 +16,7 @@
                         </a>
                     </li>
                     <li class="sorting__item">
-                        <a class="sorting__link <?=($_GET['sort_value'] === 'likes') ? 'sorting__link--active' : ""; ?>" href="#">
+                        <a class="sorting__link <?=($query_params['sort_value'] === 'likes') ? 'sorting__link--active' : ""; ?>" href="#">
                             <span>Лайки</span>
                             <svg class="sorting__icon" width="10" height="12">
                                 <use xlink:href="#icon-sort"></use>
@@ -24,7 +24,7 @@
                         </a>
                     </li>
                     <li class="sorting__item">
-                        <a class="sorting__link <?=($_GET['sort_value'] === 'post-date') ? 'sorting__link--active' : ""; ?>" href="#">
+                        <a class="sorting__link <?=($query_params['sort_value'] === 'post-date') ? 'sorting__link--active' : ""; ?>" href="#">
                             <span>Дата</span>
                             <svg class="sorting__icon" width="10" height="12">
                                 <use xlink:href="#icon-sort"></use>
@@ -37,7 +37,7 @@
                 <b class="popular__filters-caption filters__caption">Тип контента:</b>
                 <ul class="popular__filters-list filters__list">
                     <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                        <a class="filters__button filters__button--ellipse filters__button--all <?=($_GET['category_id']==="all" || empty($_GET['category_id']))? 'filters__button--active' : ""; ?>  href="<?= create_url('all') ?>">
+                        <a class="filters__button filters__button--ellipse filters__button--all <?=($query_params['content_type_id'] === "all" || empty($query_params['content_type_id']))? 'filters__button--active"' : '"' ?>  href="<?= create_url('all',$query_params['sort_value'],$query_params['sort_order']) ?>">
                             <span>Все</span>
                         </a>
                     </li>
