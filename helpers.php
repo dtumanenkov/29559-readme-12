@@ -352,6 +352,8 @@ function trim_text($str,$symbols_number = 300){ //
 function create_url($category_id, $sort_value, $sorting, string $page_url="index.php"){
     $parameters = $_GET;
     $parameters['category_id'] = $category_id;
+    $parameters['sort_value'] = $sort_value;
+    $parameters['sorting'] = $sorting;
     $query = http_build_query($parameters);
     return "/".$page_url."?".$query;
 }

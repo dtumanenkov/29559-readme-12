@@ -23,6 +23,30 @@ function popular_post_list($link, $sort_value = 'views', $sorting = 'DESC', $lim
     $result = get_array_from_sql_query($link, $sql);
     return empty($result) ? NULL : $result;
 }
+/* Список популярных постов  */
+/**
+ * Список популярных постов с сортировкой по типу контента
+ * @param mysqli $link
+ * @param string $content_type тип контента
+ * @param string $sort_value тип сортировки
+ * @param string $sorting по возрастанию/убыванию
+ * @param int $limit максимально количество на странице
+ * @return array|null
+ */
+function popular_post_category_sorting($link, $content_type, $sort_value = 'views', $sorting = 'DESC')
+{
+    $sql = "SELECT p.post_id, p.date_of_publication, p.header, p.content, p.quote_author, p.image, p.video, p.link,
+    p.views, p.content_type_id, u.login, u.avatar, c.content_name, c.content_icon_name, IFNULL(l.likes_count, 0) AS likes_count, IFNULL(com.comments_count, 0) AS comments_count
+    FROM posts p
+    INNER JOIN users u ON p.author_id = u.id
+    INNER JOIN content_types c ON p.content_type_id = c.id
+    LEFT JOIN (SELECT l.post_id, COUNT(*) as likes_count FROM likes l GROUP BY l.post_id) AS l ON l.post_id = p.post_id
+    LEFT JOIN (SELECT com.post_id, COUNT(*) as comments_count FROM comments com GROUP BY com.post_id) AS com ON com.post_id=p.post_id
+    WHERE c.content_icon_name = $content_type
+    ORDER BY $sort_value $sorting";
+    $result = get_array_from_sql_query($link, $sql);
+    return empty($result) ? NULL : $result;
+}
 
 /* Список категорий постов */
 /**

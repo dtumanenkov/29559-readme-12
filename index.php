@@ -9,10 +9,8 @@ $user_name = 'Denis'; // укажите здесь ваше имя
 $page_title = 'Readme';
 $con = database_connecting('localhost',$user_name,'',$page_title);
 
-$content_types_sql_result = get_array_from_sql_query($con, $sql_content_types);
-
-/* Список  постов  */
-$posts_list = get_array_from_sql_query($con, $sql_popular_posts_list);
+/* Список категорий постов */
+$content_types_sql_result = content_types($con);
 
 /* Строка запроса: текущий активный тип контента, сортировки и порядок сортировки*/
 $get_active_content_type = filter_input(INPUT_GET,'content-type');
@@ -27,15 +25,22 @@ if($get_active_content_type){
     $query_params['sort_order'] = $get_sorting_order ?? 'DESC';
 }
 
+/* Список популярных  постов  */
+if (isset($_GET['content_type'])) {
+    if($_GET['content_type'] === 'all') {
+        $posts_list = popular_post_list($con, $get_active_sorting_type, $get_sorting_order);
+    }
+    else{
+        $posts_list = popular_post_category_sorting($con, $get_active_content_type, $get_active_sorting_type, $get_sorting_order);
+    }
+}
 /* параметры сортировки */
 
 $page_content = include_template('main.php',
     ['posts_list' => $posts_list,
     'text_max_symbols_number' => $text_max_symbols_number,
     'content_types_sql_result' => $content_types_sql_result,
-    'content-type' => $get_active_content_type,
-    'sorting-type' => $get_active_sorting_type,
-    'sorting_order' => $get_sorting_order]);
+    'query_params' => 'query_params']);
 
 $layout_content = include_template('layout.php',
     ['user_name' => $user_name,
