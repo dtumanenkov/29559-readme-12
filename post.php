@@ -18,10 +18,11 @@ if(!$post) {
     }
 
 $post_content = include_template("{$post['content_icon_name']}.php", ['post' => $post]);
-$user_posts_count = get_user_posts_count($link, $post['author_id']);
+$posts_count = get_user_posts_count($link, $post['author_id']);
 $page_content = include_template('post-show.php', [
     'post_content' => $post_content,
     'post' => $post,
+    'user_posts_count' => $posts_count[0],
     ]);
 
 $layout_content = include_template('layout.php',[
@@ -29,6 +30,5 @@ $layout_content = include_template('layout.php',[
    'is_auth' => $is_auth,
    'user_name' => $user_name,
    'title' => $page_title,
-   '$user_posts_count' => $user_posts_count,
 ]);
 print($layout_content);
