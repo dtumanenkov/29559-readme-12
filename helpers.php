@@ -286,7 +286,7 @@ function time_delta($post_time){
     $end_ts = strtotime($post_time);
     $ts_diff = time() - $end_ts;
 
-    if ($ts_diff <= 60) { /**менее 60 сек */
+    if ($ts_diff <= SEC_IN_MINUTE) { /**менее 60 сек */
         return 'менее минуты назад';
 
     } elseif ($ts_diff <= SEC_IN_HOUR && $ts_diff > 60) { /**менее 60 минут*/

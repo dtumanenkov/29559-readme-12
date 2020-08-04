@@ -34,7 +34,7 @@ function popular_post_list($link, $sort_value = 'views', $sorting = 'DESC', $lim
  * @param int $limit максимально количество на странице
  * @return array|null
  */
-function popular_post_category_sorting($link, $content_type, $sort_value = 'views', $sorting = 'DESC')
+function get_popular_post_category_sorting($link, $content_type, $sort_value = 'views', $sorting = 'DESC')
 {
     $sql = "SELECT p.post_id, p.date_of_publication, p.header, p.content, p.quote_author, p.image, p.video, p.link,
     p.views, p.content_type_id, u.login, u.avatar, c.content_name, c.content_icon_name, IFNULL(l.likes_count, 0) AS likes_count, IFNULL(com.comments_count, 0) AS comments_count
@@ -52,10 +52,10 @@ function popular_post_category_sorting($link, $content_type, $sort_value = 'view
 /* Список категорий постов */
 /**
  * Список категорий постов
- * @param $link
+ * @param mysqli $link
  * @return array|null
  */
-function content_types($link){
+function get_content_types($link){
     $sql = "SELECT id, content_name, content_icon_name, i.icon_name, i.width, i.height
     FROM content_types
     INNER JOIN icon_sizes_for_content_types i ON i.icon_size_id = content_types.id ";
@@ -108,7 +108,7 @@ function get_user_posts($link, $user_id){
  * @return int|NULL
  */
 function get_user_posts_count($link, $user_id){
-    $sql = "SELECT COUNT(*) AS posts_count FROM posts p 
+    $sql = "SELECT COUNT(*) AS posts_count FROM posts p
     WHERE p.author_id = $user_id";
     $result = get_array_from_sql_query($link, $sql);
     return empty($result) ? NULL : $result;

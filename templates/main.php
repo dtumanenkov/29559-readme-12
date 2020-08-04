@@ -45,10 +45,10 @@
                     <?php $unique_post_type_list = array_unique(array_column($posts_list,"content_type_id"));?> <!--список уникальных типов постов на странице -->
                     <?php foreach ($unique_post_type_list as $unique_post): ?>
                     <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--<?= $content_types_sql_result[$unique_post-1]['icon_name'] ?>" href="index.php?content_type_id=<?=$content_types_sql_result[$unique_post-1]['id'] ?>">
+                        <a class="filters__button filters__button--<?= $content_types[$unique_post-1]['icon_name'] ?>" href="index.php?content_type_id=<?=$content_types[$unique_post-1]['id'] ?>">
                             <span class="visually-hidden">Фото</span>
-                            <svg class="filters__icon" width="<?=$content_types_sql_result[$unique_post-1]['width']?>" height="<?=$content_types_sql_result[$unique_post]['height']?>">
-                                <use xlink:href="#icon-filter-<?= $content_types_sql_result[$unique_post-1]['icon_name'] ?>"></use>
+                            <svg class="filters__icon" width="<?=$content_types[$unique_post-1]['width']?>" height="<?=$content_types[$unique_post]['height']?>">
+                                <use xlink:href="#icon-filter-<?= $content_types[$unique_post-1]['icon_name'] ?>"></use>
                             </svg>
                         </a>
                     </li>
