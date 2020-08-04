@@ -267,8 +267,8 @@ function generate_random_date($index)
  */
 function get_array_from_sql_query($connection, $sql_query){
     $query = mysqli_query($connection, $sql_query);
-    if (! $query){
-        exit(mysqli_error($query));
+    if (!$connection){
+        exit(mysqli_error($connection));
     }
     return mysqli_fetch_all($query,MYSQLI_ASSOC);
 }
