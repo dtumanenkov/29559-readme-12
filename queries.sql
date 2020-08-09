@@ -83,8 +83,19 @@ SELECT c.comment, p.header, u.login FROM comments c
     WHERE p.post_id = 1;
 
 /* Добавить лайк к посту */
-INSERT INTO likes SET user_id = 1, post_id = 4;
+INSERT INTO likes
+    (user_id, post_id)
+VALUES (1, 4),
+       (2, 4),
+       (3, 4),
+       (2, 1),
+       (3, 2);
 
 /* подписаться на пользователя */
-INSERT INTO subscriptions SET subscription_user_id = 1, user_id = 2;
+INSERT INTO subscriptions
+    (subscription_user_id, user_id)
+VALUES (1,2),
+       (1,3),
+       (2,1),
+       (2,3);
 
