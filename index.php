@@ -33,19 +33,24 @@ if (isset($_GET['content_type_id'])) {
         $posts_list = get_popular_post_category_sorting($connection, $get_active_content_type, $get_active_sorting_type, $get_sorting_order);
     }
 }
-/* параметры сортировки */
-
-$page_content = include_template('main.php',
-    ['posts_list' => $posts_list,
-    'text_max_symbols_number' => $text_max_symbols_number,
-    'content_types' => $content_types_sql_result,
-    'query_params' => $query_params]);
-
-$layout_content = include_template('layout.php',
-    ['user_name' => $user_name,
+/* Проверка на существование контента*/
+if($posts_list) {
+    $page_content = include_template('main.php', [
+        'posts_list' => $posts_list,
+        'text_max_symbols_number' => $text_max_symbols_number,
+        'content_types' => $content_types_sql_result,
+        'query_params' => $query_params
+    ]);
+}
+else{
+    $page_content = include_template("post/404.php");
+}
+$layout_content = include_template('layout.php', [
+    'user_name' => $user_name,
     'page_title' => $page_title,
     'is_auth' => $is_auth,
-    'page_content' => $page_content]);
+    'page_content' => $page_content
+]);
 print($layout_content);
 
 

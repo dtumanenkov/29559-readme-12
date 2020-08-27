@@ -19,7 +19,7 @@ if(!$post) {
 
 $post_content = include_template("post/{$post['content_icon_name']}.php", ['post' => $post]);
 $posts_count = get_user_posts_count($connection, $post['author_id']);
-$page_content = include_template('post/post-show.php', [
+$page_content = include_template('post/show.php', [
     'post_content' => $post_content,
     'post' => $post,
     'user_posts_count' => $posts_count[0],

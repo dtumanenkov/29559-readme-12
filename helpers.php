@@ -355,8 +355,7 @@ function create_url($category_id, $sort_value, $sorting, string $page_url = "ind
     $parameters['sort_value'] = $sort_value;
     $parameters['sorting'] = $sorting;
     $query = http_build_query($parameters);
-    $url = "/". $page_url. "?". $query;
-    return $url;
+    return "/{$page_url}?{$query}";
 }
 
 /**
