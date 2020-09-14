@@ -8,7 +8,7 @@ $user_name = 'root'; // укажите здесь ваше имя
 $page_title = 'Readme';
 
 $content_types_sql_result = get_content_types($connection);
-$form_type = 'text';
+$form_type = 'quote';
 $page_content = include_template('../templates/post/adding-post.php', [
     'content_types' => $content_types_sql_result,
     'form_type' => $form_type
