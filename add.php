@@ -7,6 +7,9 @@ $text_max_symbols_number = 300;//максимальная длина текст�
 $user_name = 'root'; // укажите здесь ваше имя
 $page_title = 'Readme';
 
+$add_text_post_query="INSERT into posts SET header = ?, content = ?, views = ?, author_id = ?, content_type_id = ?";
+$xxx = db_get_prepare_stmt($connection,$add_text_post_query,['hi','every',100,1,2]);
+mysqli_stmt_execute($xxx);
 $content_types_sql_result = get_content_types($connection);
 $form_type = 'quote';
 $page_content = include_template('../templates/post/adding-post.php', [
