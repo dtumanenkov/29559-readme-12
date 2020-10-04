@@ -90,4 +90,4 @@ CREATE TABLE icon_sizes_for_content_types(
     height INT NOT NULL,
     FOREIGN KEY (icon_size_id) REFERENCES content_types(id)
 );
-
+}
